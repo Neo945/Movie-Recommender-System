@@ -1,4 +1,5 @@
 {
     "python.pythonPath": "Django\\Scripts\\python.exe",
-    "jupyter.jupyterServerType": "remote"
+    "jupyter.jupyterServerType": "remote",
+    "git.ignoreLimitWarning": true
 }
