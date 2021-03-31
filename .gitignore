@@ -1,1 +1,5 @@
 Django
+
+*/__pycache__
+
+*/migrations
