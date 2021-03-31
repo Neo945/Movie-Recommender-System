@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.urls.conf import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('music/',include('movies.urls',namespace='movies'))
+] + staticfiles_urlpatterns()
