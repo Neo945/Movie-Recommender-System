@@ -15,6 +15,8 @@ class MovieSerializer(serializers.ModelSerializer):
     genre = serializers.SerializerMethodField('get_genre')
     director = DirectorSerializer(read_only=True)
     likes = serializers.SerializerMethodField('get_likes')
+    # file = serializers.SerializerMethodField('get_file_link')
+    # poster = serializers.SerializerMethodField('get_poster_link')
     class Meta:
         model = Movie
         fields = ['name','file','poster','rating','director','cast','genre','likes']
