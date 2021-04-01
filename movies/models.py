@@ -1,5 +1,13 @@
 from django.db import models
+from django.conf import settings
 from django.core.validators import MaxValueValidator,MinValueValidator
+
+User = settings.AUTH_USER_MODEL
+
+class MovieLikes(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    movies = models.ForeignKey('Movie',on_delete=models.CASCADE)
+
 
 # Create your models here.
 class Movie(models.Model):
@@ -10,6 +18,7 @@ class Movie(models.Model):
     genre = models.ManyToManyField('Genre',related_name='genres',blank=True,through='movie_genre')
     director = models.ForeignKey('Director',on_delete=models.CASCADE)
     cast = models.TextField(null=False)
+    likes = models.ManyToManyField(User,related_name='user_movies',through=MovieLikes)
     # upload_by = models.ForeignKey(Profile,on_delete=models.SET('Anonymous'))
 
 class movie_genre(models.Model):
