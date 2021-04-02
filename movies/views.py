@@ -1,7 +1,8 @@
 from django.db import models
+from accounts.models import Profile
 from django.http.response import Http404
-from movies.serializers import MovieSerializer
-from movies.models import Movie,Genre
+from movies.serializers import DirectorSerializer, GenreSerializer, MovieCreateSerializer, MovieSerializer
+from movies.models import Director, Movie,Genre
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -45,4 +46,49 @@ def movie_search(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_movie(request):
-    pass
+    dir = request.data.get('director')
+    genre = str(request.data.get('genre')).split(" ")
+    # print(genre)
+    serial = MovieCreateSerializer(data=request.data or None)
+    if serial.is_valid():
+        if not Director.objects.filter(name=dir).exists():
+            Director(name=dir).save()
+        dir = Director.objects.filter(name=dir).first()
+        u = serial.save(director=dir,upload_by=Profile.objects.filter(user=request.user).first())        
+        m = Movie.objects.filter(name=serial.data['name']).first()
+        for g in genre:
+            qs = Genre.objects.filter(genre=g)
+            if qs.exists():
+                qs = qs.first()
+            else:
+                qs = Genre(genre=g)
+                qs.save()
+            m.genre.add(qs)
+        return Response({'message':'Success'},status=201)
+    return Response({},status=400)
+
+    '''
+    {
+        "name": "Damn",
+        "file": "Damn",
+        "poster": "Damn",
+        "rating": 9.9,
+        "director": "Shreesh",
+        "cast": "Shreesh Srivastava",
+        "genre":"Damn KK"
+    }
+'''
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def genre_list(request):
+    qs = Genre.objects.all()
+    serial = GenreSerializer(qs,many=True)
+    return Response(serial.data,status=200)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def director_list(request):
+    qs = Director.objects.all()
+    serial = DirectorSerializer(qs,many=True)
+    return Response(serial.data,status=200)

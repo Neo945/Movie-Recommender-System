@@ -1,4 +1,5 @@
 from django.db import models
+from accounts.models import Profile
 from django.conf import settings
 from django.core.validators import MaxValueValidator,MinValueValidator
 
@@ -19,7 +20,7 @@ class Movie(models.Model):
     director = models.ForeignKey('Director',on_delete=models.CASCADE)
     cast = models.TextField(null=False)
     likes = models.ManyToManyField(User,related_name='user_movies',through=MovieLikes)
-    # upload_by = models.ForeignKey(Profile,on_delete=models.SET('Anonymous'))
+    upload_by = models.ForeignKey(Profile,on_delete=models.SET('Anonymous'))
 
     def __str__(self) -> str:
         return self.name
