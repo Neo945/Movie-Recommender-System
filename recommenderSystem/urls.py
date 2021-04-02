@@ -21,5 +21,5 @@ from django.urls.conf import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('movie/',include('movies.urls',namespace='movies')),
-    path('accounts/',include('accounts.urls',namespace='accounts')),
+    path('user/',include('accounts.urls',namespace='accounts')),
 ] + staticfiles_urlpatterns()
