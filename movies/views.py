@@ -42,3 +42,7 @@ def movie_search(request):
         return Response(MovieSerializer(qs,many=True).data,status=200)
     return Response({'message':'Movie not found'},status=404)
 
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_movie(request):
+    pass

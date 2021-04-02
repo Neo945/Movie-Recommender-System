@@ -4,30 +4,38 @@ body {
     background: #c8c8c8;
     font: 600 16px/18px 'Open Sans', sans-serif;
 }
-.background{
+.bg-image {
     background-image: url('../images/background_image.jpg');
-    background-repeat: no-repeat;
+  
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+  width: 100%;
+    height: 100%;
+  position: absolute;
     background-position: center;
-    background-size:cover;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
+  
 .login-box {
     width: 100%;
-    margin: auto;
+    /* margin-top: 50px; */
     max-width: 525px;
     min-height: 670px;
     position: relative;
-    box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
-}
-.card{
-    background-color: green;
+    /* box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19); */
 }
 .login-snip {
     width: 100%;
     height: 100%;
     position: absolute;
     padding: 90px 70px 50px 70px;
-    background: rgba(0, 77, 77, .9);
+  
+    /* background: linear-gradient( #000000, #ffffff)!important; */
+    /* opacity: 0.9; */
+    background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0, 0.5);
+
 }
 
 .login-snip .login,
@@ -96,7 +104,7 @@ body {
     border: none;
     padding: 15px 20px;
     border-radius: 25px;
-    background: rgba(255, 255, 255, .1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .login-space .group input[data-type="password"] {
@@ -107,11 +115,24 @@ body {
     color: #aaa;
     font-size: 12px;
 }
-
-.login-space .group .button {
-    background: #1161ee;
+.tab{
+    font-weight: bold;
 }
-
+.login-space .group .button {
+    background: rgba(255, 255, 255, 0.5);
+    transition: 1s;
+}
+#user:focus, #pass:focus{
+    animation: shade 0.5s;
+    background: rgba(255, 255, 255, 1);
+}
+@keyframes shade {
+    from{
+    background: rgba(255, 255, 255, 0.1);
+    }to{
+    background: rgba(255, 255, 255, 1);
+    }
+}
 .login-space .group label .icon {
     width: 15px;
     height: 15px;
@@ -151,7 +172,6 @@ body {
 .login-space .group .check:checked+label .icon {
     background: #1161ee;
 }
-
 .login-space .group .check:checked+label .icon:before {
     transform: scale(1) rotate(45deg);
 }
@@ -192,10 +212,18 @@ a {
 
 .hr {
     height: 2px;
-    margin: 60px 0 50px 0;
+    margin: 30px 0 30px 0;
     background: rgba(255, 255, 255, .2);
 }
-
+.label{
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+a.label:hover{
+    color: white;
+    text-decoration: none;
+}
 .foot {
     text-align: center;
 }
@@ -203,9 +231,18 @@ a {
 .card {
     width: 500px;
     left: 100px;
-    background-color: transparent!important
+    background-color: transparent!important;
+    border: none!important;
 }
 
 ::placeholder {
     color: #b3b3b3;
+}
+.login-snip{
+    border: 3px solid #f1f1f1;
+}
+
+.button:hover {
+    background: #292929!important;
+    opacity: 0.9;
 }
