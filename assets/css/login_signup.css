@@ -3,7 +3,12 @@ body {
     color: #6a6f8c;
     background: #c8c8c8;
     font: 600 16px/18px 'Open Sans', sans-serif;
-    background-image: url("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/new-years-movies-1576786807.jpg?crop=0.502xw:1.00xh;0,0&resize=640:*");
+}
+.background{
+    background-image: url('../images/background_image.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
 }
 
 .login-box {
@@ -14,7 +19,9 @@ body {
     position: relative;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, .24), 0 17px 50px 0 rgba(0, 0, 0, .19);
 }
-
+.card{
+    background-color: green;
+}
 .login-snip {
     width: 100%;
     height: 100%;
@@ -32,7 +39,7 @@ body {
     position: absolute;
     transform: rotateY(180deg);
     backface-visibility: hidden;
-    transition: all .4s linear
+    transition: all .4s linear;
 }
 
 .login-snip .sign-in,
@@ -46,14 +53,17 @@ body {
 .login-space .group .button {
     text-transform: uppercase;
 }
-
+.login-snip{
+    margin-top: 50px;
+}
 .login-snip .tab {
     font-size: 22px;
     margin-right: 15px;
     padding-bottom: 5px;
     margin: 0 15px 10px 0;
     display: inline-block;
-    border-bottom: 2px solid transparent
+    border-bottom: 2px solid transparent;
+
 }
 
 .login-snip .sign-in:checked+.tab,
@@ -193,6 +203,7 @@ a {
 .card {
     width: 500px;
     left: 100px;
+    background-color: transparent!important
 }
 
 ::placeholder {

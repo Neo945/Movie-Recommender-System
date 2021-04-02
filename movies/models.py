@@ -21,6 +21,9 @@ class Movie(models.Model):
     likes = models.ManyToManyField(User,related_name='user_movies',through=MovieLikes)
     # upload_by = models.ForeignKey(Profile,on_delete=models.SET('Anonymous'))
 
+    def __str__(self) -> str:
+        return self.name
+
 class movie_genre(models.Model):
     movie = models.ForeignKey(Movie,on_delete=models.CASCADE)
     genre = models.ForeignKey('Genre',on_delete=models.CASCADE)
