@@ -7,7 +7,8 @@ from .views import (
     movie_details,
     genre_movie,
     movie_search,
-    create_movie
+    create_movie,
+    recommend
 )
 app_name = 'movies'
 
@@ -19,5 +20,6 @@ urlpatterns = [
     path('api/movie/create',create_movie),
     path('api/director',director_list),
     path('api/genre',genre_list),
-    path('',TemplateView.as_view(template_name='login_signup.html'))
+    path('',TemplateView.as_view(template_name='login_signup.html')),
+    path('recommend',recommend)
 ]

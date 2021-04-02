@@ -21,7 +21,7 @@ class MovieSerializer(serializers.ModelSerializer):
     # poster = serializers.SerializerMethodField('get_poster_link')
     class Meta:
         model = Movie
-        fields = ['name','file','poster','rating','director','cast','genre','likes','upload_by']
+        fields = ['id','name','file','poster','rating','director','cast','genre','likes','upload_by']
     
     def get_likes(self,obj):
         return obj.likes.count()
