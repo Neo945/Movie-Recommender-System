@@ -1,12 +1,13 @@
+/**/
 body {
     margin: 0;
     color: #6a6f8c;
     background: #c8c8c8;
     font: 600 16px/18px 'Open Sans', sans-serif;
 }
-.bg-image {
-    background-image: url('../images/background_image.jpg');
-  
+#bimage {
+    /* background-image: url('../images/background_image.jpg'); */
+    background: linear-gradient( #000000, #ffffff);
     filter: blur(5px);
     -webkit-filter: blur(5px);
   width: 100%;

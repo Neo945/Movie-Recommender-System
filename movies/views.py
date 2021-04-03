@@ -53,18 +53,11 @@ def create_movie(request):
     # print(genre)
     serial = MovieCreateSerializer(data=request.data or None)
     if serial.is_valid():
-        if not Director.objects.filter(name=dir).exists():
-            Director(name=dir).save()
-        dir = Director.objects.filter(name=dir).first()
+        dir = Director.objects.get_or_create(name=dir)
         u = serial.save(director=dir,upload_by=Profile.objects.filter(user=request.user).first())        
         m = Movie.objects.filter(name=serial.data['name']).first()
         for g in genre:
-            qs = Genre.objects.filter(genre=g)
-            if qs.exists():
-                qs = qs.first()
-            else:
-                qs = Genre(genre=g)
-                qs.save()
+            qs = Genre.objects.get_or_create(genre=g)
             m.genre.add(qs)
         return Response({'message':'Success'},status=201)
     return Response({},status=400)
@@ -100,11 +93,12 @@ def director_list(request):
 def recommend(request):
     user = request.user
     qs = History.objects.filter(user=Profile.objects.filter(user=user).first())
+    if not qs.exists():
+        return Response(MovieSerializer(Movie.objects.all().order_by("?"),many=True),status=200)
     watched_movies = list()
     for q in qs:
         watched_movies.append(q.movies)
-    qs = recommend_movies(watched_movies)
-    # serial = MovieSerializer(qs,many=True)
+    qs = recommend_movies(watched_movies,Profile.objects.filter(user=request.user).first())
     data = []
     for l in qs:
         s = MovieSerializer(l)
