@@ -1,0 +1,29 @@
+.fa-user-circle{
+    color: black;
+    font-size: 35px;
+    margin-left: 15px;
+}
+
+h1,h3{
+    color: white;
+}
+
+body{
+    background: url('https://img.17qq.com/images/hjipedejpjz.jpeg') no-repeat center; 
+    background-size: cover;
+}
+
+.card img{
+    height: 300px;
+    width: 260px;
+}
+
+.dropdown-menu{
+    width: 50px;
+    position: relative;
+    right: 0px;
+}
+
+.dropdown-toggle{
+    background-color: #e3f2fd;
+}
