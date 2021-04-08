@@ -1,3 +1,4 @@
+from operator import ge, le
 from accounts.models import History, Profile
 from movies.models import Movie
 from sklearn.feature_extraction.text import CountVectorizer
@@ -84,8 +85,8 @@ def get_similar_user_item(list_watch,user):
     # print(list2)
 
 def get_similar_movies(movie,rating,similar_user):
-    similar_score = enumerate(similar_user[movie]*(rating - 2.5))
-    similar_score = sorted(similar_score,key=lambda x:x[1],reverse=True)
+    similar_score = list(enumerate(similar_user[movie]*(rating - 2.5)))
+    # similar_score = sorted(similar_score,key=lambda x:x[1],reverse=True)
     return similar_score
 
 def user_recomend(list_watch,user):
@@ -95,33 +96,53 @@ def user_recomend(list_watch,user):
     for movies in user_history:
         list3.append(get_similar_movies(movies.movies.id-1,movies.user_rating,similar_user))
     l = []
-    # length = len(list3[0])
-    # for k in range(length):
-    #     sum = 0
-    #     for m in range(len(list3)):
-    #         sum += list3[m][k][1]
-    #     l.append((k,sum))
-    # print(l)
     print(list3)
+    length = Movie.objects.all().count()
+    no_of_user = len(list_watch)
     i = 0
-    # for k in list3[0]:
-    #     j = 0
-    #     sum = 0
-    #     while j<len(k):
-    #         if i == k[j]:
-    #             sum += k[j]
-    #         j+=1
-    #     l.append((i,sum))
-    #     i+=1
-    # print(l)
+    while i<length:
+        j = 0
+        sum = 0
+        while j<no_of_user:
+            sum += list3[j][i][1]
+            j+=1
+        l.append((i,sum))
+        i += 1
+    l = sorted(l,key=lambda x:x[1],reverse=True)
+    print(l)
     return l
 
+
+def generalize_list(l):
+    l = sorted(l,key=lambda x:x[0])
+    d = {}
+    d_c = {}
+    for k,v in l:
+        d[k] = d.get(k,0) + v
+        d_c[k] = d_c.get(k,0) + 1
+    l = []
+    for k in d:
+        l.append((k,d[k]/d_c[k]))
+    return sorted(l,key=lambda x:x[1],reverse=True)
+
+def combine(l1,l2):
+    l1 = sorted(l1,key=lambda x:x[0],reverse=True)
+    l2 = sorted(l2,key=lambda x:x[0],reverse=True)
+    k = len(l1)
+    l3 = []
+    for l in range(k):
+        l3.append((l,l1[l][1]+l2[l][1]))
+    return sorted(l3,key=lambda x:x[1],reverse=True)
+
 def recommend_movies(list_watch,user):
-    cb_list = recommend_CB(list_watch)
+    l = user_recomend(list_watch,user)
+    list_ = sorted(recommend_CB(list_watch),key=lambda x:x[1],reverse=True)
+    list_ = list(filter(lambda x:math.floor(x[1]) != 1,list_))
+    list_ = generalize_list(list_)
+    list_ = combine(l,list_)
+    print(list_)
     k = []
-    user_recomend(list_watch,user)
     count = 0
-    list_ = sorted(cb_list,key=lambda x:x[1],reverse=True)
     for id in list_:
         if math.floor(id[1]) != 1:
             k.append(Movie.objects.filter(pk=(id[0]+1)).first())
