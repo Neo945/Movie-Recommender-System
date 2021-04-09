@@ -10,3 +10,4 @@ class History(models.Model):
     user = models.ForeignKey(Profile,on_delete=models.CASCADE)
     movies = models.ForeignKey('movies.Movie',on_delete=models.CASCADE)
     user_rating = models.IntegerField(null=False,validators=[MaxValueValidator(10),MinValueValidator(1)])
+    comments = models.TextField(max_length=255,blank=True,null=True)

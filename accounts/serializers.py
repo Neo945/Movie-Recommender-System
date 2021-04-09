@@ -15,4 +15,4 @@ class HistorySerializer(serializers.ModelSerializer):
 class HistoryCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = History
-        fields = ['id','movies','user_rating']
+        fields = ['id','movies','user_rating','comments']
