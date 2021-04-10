@@ -15,12 +15,9 @@ class DirectorSerializer(serializers.ModelSerializer):
 class MovieSerializer(serializers.ModelSerializer):
     genre = serializers.SerializerMethodField('get_genre')
     director = DirectorSerializer(read_only=True)
-    likes = serializers.SerializerMethodField('get_likes')
-    # file = serializers.SerializerMethodField('get_file_link')
-    # poster = serializers.SerializerMethodField('get_poster_link')
     class Meta:
         model = Movie
-        fields = ['id','name','poster','rating','director','cast','genre','likes']
+        fields = ['id','name','poster','rating','director','cast','genre']
     
     def get_likes(self,obj):
         return obj.likes.count()
