@@ -156,8 +156,14 @@ def recommend_movies(list_watch,user):
     k = []
     count = 0
     for id in list_:
-        k.append(Movie.objects.filter(pk=(id[0]+1)).first())
-        count+=1
-        if count>2:
-            break
+        try:
+            qs = Movie.objects.filter(pk=(id[0]+1))
+            if qs.exists():
+                k.append(qs.first())
+            count+=1
+            if count>10:
+                break
+        except:
+            count+=1
+            pass
     return k
