@@ -7,6 +7,8 @@ body {
 }
 #bimage {
     background-image: url('../images/image.jpg');
+    background-size: cover;
+
     filter: blur(10px);
     -webkit-filter: blur(10px);
   width:100%;
