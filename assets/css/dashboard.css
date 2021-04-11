@@ -9,7 +9,7 @@ h1,h3{
 }
 
 body{
-    background: url('https://img.17qq.com/images/hjipedejpjz.jpeg') no-repeat center; 
+    background-image: url('https://img.17qq.com/images/hjipedejpjz.jpeg'); 
     background-size: cover;
 }
 
