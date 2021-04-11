@@ -6,7 +6,7 @@ class HistorySerializer(serializers.ModelSerializer):
     movies = serializers.SerializerMethodField('get_movie_name')
     class Meta:
         model = History
-        fields = ['id','movies','user','user_rating']
+        fields = ['id','movies','user','user_rating','comments']
     def get_user(self,obj):
         return obj.user.user.username
     def get_movie_name(self,obj):
@@ -15,4 +15,4 @@ class HistorySerializer(serializers.ModelSerializer):
 class HistoryCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = History
-        fields = ['id','movies','user_rating']
+        fields = ['id','movies','user_rating','comments']

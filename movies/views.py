@@ -101,6 +101,7 @@ def recommend(request):
     qs = recommend_movies(watched_movies,Profile.objects.filter(user=request.user).first())
     data = []
     for l in qs:
-        s = MovieSerializer(l)
-        data.append(s.data)
+        if not l in watched_movies:
+            s = MovieSerializer(l)
+            data.append(s.data)
     return Response(data,status=200)
