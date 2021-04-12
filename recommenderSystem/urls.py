@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('movie/',include('movies.urls',namespace='movies')),
     path('user/',include('accounts.urls',namespace='accounts')),
+    path('',include('frontend.urls',namespace='frontend')),
 ] + staticfiles_urlpatterns()

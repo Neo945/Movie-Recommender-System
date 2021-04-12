@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     
     'movies',
     'accounts',
+    'frontend',
 
     'rest_framework',
 ]

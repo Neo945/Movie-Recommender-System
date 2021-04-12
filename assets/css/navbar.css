@@ -1,0 +1,52 @@
+#logout{
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    border-radius: 30px;
+}
+* {
+    box-sizing: border-box;
+}
+
+.navbar{
+    background-color: transparent !important;
+}
+
+.nav-link, .navbar-brand{
+    color: white !important;
+}
+
+
+.search{
+    opacity: 0.5 !important;
+    transition: all 0.5s !important;
+}
+
+.search:hover{
+    opacity: 1 !important;
+}
+
+
+body {
+    background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
+    backdrop-filter: blur(7px);
+}
+
+.search{
+    margin-left: 0.5em;
+}
+
+#logout{
+    background-color: rgb(136, 196, 196);
+    opacity: 0.5 !important;
+    color: white;
+    transition: all 0.5s;
+}
+
+#logout:hover{
+    opacity: 1 !important;
+}
+
+#navbar-brand{
+    font-size: 35px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
