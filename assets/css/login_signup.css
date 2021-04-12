@@ -1,12 +1,12 @@
 /**/
 body {
     margin: 0;
-    color: #6a6f8c;
+    color: #2c2e3b;
     background: #c8c8c8;
     font: 600 16px/18px 'Open Sans', sans-serif;
 }
 #bimage {
-    background-image: url('../images/image.jpg');
+    background-image: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
     background-size: cover;
 
     filter: blur(10px);
@@ -108,7 +108,8 @@ body {
     border: none;
     padding: 15px 20px;
     border-radius: 25px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+    outline: none;
 }
 
 .login-space .group input[data-type="password"] {
@@ -116,8 +117,9 @@ body {
 }
 
 .login-space .group .label {
-    color: #aaa;
+    color: rgb(74, 70, 105);
     font-size: 12px;
+    font-weight: bold;
 }
 .tab{
     font-weight: bold;

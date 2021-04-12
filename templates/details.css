@@ -1,5 +1,6 @@
 body{
-    background: url('https://img.freepik.com/free-photo/black-smooth-textured-background_53876-98437.jpg?size=626&ext=jpg&ga=GA1.2.1851586735.1617408000');
+    background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
+    backdrop-filter: blur(7px);
 }
 
 .fa-user-circle{
@@ -17,7 +18,9 @@ body{
 .form-control{
     width: 5em;
 }
-
+/* form h1{ */
+    /* color: black; */
+/* } */
 .mov-img img{
     height: 30em;
     width: 370px;
@@ -61,9 +64,7 @@ body{
 
 #submit{
     position: relative;
-    top: 100px;
-    left: 350px;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
 }
 
 .fa-location-arrow{

@@ -149,6 +149,8 @@ def recommend_movies(list_watch,user):
     # print('Final User list ',l)
     list_ = sorted(recommend_CB(list_watch),key=lambda x:x[1],reverse=True)
     list_ = list(filter(lambda x:math.floor(x[1]) != 1,list_))
+    list_ = list(map(lambda x:(x[0],x[1] * 2.5),list_))
+    print(list_)
     list_ = generalize_list(list_)
     # print('Final CB list ',list_)
     list_ = combine(l,list_)

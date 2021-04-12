@@ -7,9 +7,11 @@
 h1,h3{
     color: white;
 }
-
+.c-height{
+    height: 550px;
+}
 body{
-    background:lightblue  url('../images/image.jpg') no-repeat fixed center;
+    background:lightblue  url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
     background-size: cover;
     backdrop-filter: blur(10px);
 }

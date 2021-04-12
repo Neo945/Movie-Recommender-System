@@ -20,6 +20,6 @@ urlpatterns = [
     path('api/movie/create',create_movie),
     path('api/director',director_list),
     path('api/genre',genre_list),
-    path('',TemplateView.as_view(template_name='dashboard.html')),
+    path('',TemplateView.as_view(template_name='login_signup.html')),
     path('recommend',recommend)
 ]
