@@ -5,7 +5,7 @@ body {
     background: #c8c8c8;
     font: 600 16px/18px 'Open Sans', sans-serif;
 }
-#bimage {
+/* #bimage {
     background-image: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
     background-size: cover;
 
@@ -17,7 +17,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-}
+} */
   
 .login-box {
     width: 100%;
