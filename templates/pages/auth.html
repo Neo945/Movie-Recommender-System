@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block script %}
+<link rel="stylesheet" href="{% static 'css/login_signup.css' %}">
+
+{% endblock script %}
 {% block content %}
-<!-- <div id="bimage"></div> -->
     <div class="container">
     <div class="row">
         <div class="col-md-6 mx-auto p-0">
@@ -32,4 +36,12 @@
         </div>
     </div>
 </div>
+<script>
+    let logout = document.getElementById("logout")
+    let form = document.getElementById("form")
+    let home = document.getElementById("home")
+    logout.classList.add("d-none")
+    form.classList.add("d-none")
+    home.classList.add("d-none")
+</script>
 {% endblock %}

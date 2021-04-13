@@ -1,7 +1,4 @@
-body{
-    background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg');
-    backdrop-filter: blur(7px);
-}
+
 
 .fa-user-circle{
     color: black;
@@ -12,7 +9,7 @@ body{
 .mb-31{
     height: 30em;
     margin: auto;
-    margin-top: 3em;
+    margin-top: 3em;    
 }
 
 .form-control{
