@@ -29,7 +29,7 @@
 body {
     background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg') !important;
     backdrop-filter: blur(10px);
-    background-size: cover;
+    background-size: cover !important;
     height: 100%;
 }
 

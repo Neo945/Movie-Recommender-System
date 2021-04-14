@@ -11,12 +11,25 @@ from rest_framework.response import Response
 
 # Create your views here.
 def login_view(request):
-    form = AuthenticationForm(request,request.user or None)
-    if form.is_valid():
-        user_ = form.get_user()
-        login(request,user_)
+    form = UserCreationForm(None)
+    if request.user.is_authenticated and request.user:
+        print(request.user)
         return redirect('/')
-    return render('auth/form.html',{'form':form})
+    if request.method=='POST':
+        if request.POST.get('login')=='1':
+            form = AuthenticationForm(request,data=request.POST or None)
+            if form.is_valid():
+                user_ = form.get_user()
+                login(request,user_)
+                return redirect('/')
+        else:
+            form = UserCreationForm(request.POST or None)
+            if form.is_valid():
+                print('qwerty')
+                u = form.save(commit=True)
+                Profile(user=u).save()
+                return redirect('/')
+    return render(request,'pages/auth.html',{'form':form})
 
 @permission_classes([IsAuthenticated])
 def logout_view(request):
@@ -25,13 +38,6 @@ def logout_view(request):
         return redirect('/login')
     return redirect('/login')
 
-def register_view(request):
-    form = UserCreationForm(request.user or None)
-    if form.is_valid():
-        u = form.save(commit=True)
-        Profile(user=u).save()
-        return redirect('/')
-    return render('auth/form.html',{'form':form})
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -41,7 +47,13 @@ def watched_movie(request):
         serial.save(user=Profile.objects.filter(user=request.user).first())
         return Response({'message':f'Enjoy your movie'},status=201)
     return Response({'message':'Movie doesnot exists'},status=404)
-
+"""
+{
+"movies":1,
+"user_rating":4,
+"comments":"qwerty"
+}
+"""
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def history(request):
