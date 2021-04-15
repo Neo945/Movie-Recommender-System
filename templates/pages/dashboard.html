@@ -15,6 +15,14 @@
   {% block content %}
   <div class="container">
     <br>
+    <h1>Recommended movies for you</h1>
+    <br>
+    <div class="row row-cols-1 row-cols-md-3 g-4" id="RecommendMovies">
+    </div>
+  </div>
+
+  <div class="container">
+    <br>
     <h1>Popular on Netflix</h1>
     <br>
     <div class="row row-cols-1 row-cols-md-3 g-4" id="popMovies">
@@ -25,40 +33,44 @@
   <div class="container">
     <br>
     <h1>Genres</h1>
-    <h3>Action</h3>
+    <h3 id="genre">Action</h3>
     <br>
     <div class="row row-cols-1 row-cols-md-3 g-4" id="GenreMovies">
     </div>
   </div>
 
-  <div class="container">
-    <br>
-    <h1>Recommended movies for you</h1>
-    <br>
-    <div class="row row-cols-1 row-cols-md-3 g-4" id="RecommendMovies">
-    </div>
-  </div>
+
 
   <script>
-    const card = `<div class="col col-lg-3">
+    const card = (res) => `<div class="col col-lg-3">
         <div class="card c-height">
           <div class="image">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQI4Zfsc44zD-6kCpattLW1NLajMP_4hsFd5w&usqp=CAU"
+          <img src="https://www.popcorn.app/assets/app/images/placeholder-movieimage.png"
             class="card-img-top" alt="...">
           </div>
           <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <a href="#" class="btn btn-primary">Check details</a>
+            <h5 class="card-title">${res.name}</h5>
+            <p class="card-text">${res.description}</p>
+            <a href="/movie/${res.id}" class="btn btn-primary">Check details</a>
           </div>
         </div>
       </div>`
-      let multipleCards = card + card + card
-      const popMovies = document.getElementById("popMovies")
-      popMovies.innerHTML = multipleCards
-      const GenreMovies = document.getElementById("GenreMovies")
-      GenreMovies.innerHTML = multipleCards
-      const RecommendMovies = document.getElementById("RecommendMovies")
-      RecommendMovies.innerHTML = multipleCards
+
+      const loadMovies = (loc,response) =>{
+        for (let c of response){
+          loc.innerHTML += card(c)
+        }
+      }
+
+      lookup('movie/api/recommend',null,'GET',(response,status)=>{
+        loadMovies(document.getElementById("RecommendMovies"),response)
+      })
+      lookup('movie/api/popular',null,'GET',(response,status)=>{
+        loadMovies(document.getElementById("popMovies"),response)
+      })
+      lookup('movie/api/popular/genre/movie',null,'GET',(response,status)=>{
+        document.getElementById("genre").innerHTML = response[0].genre[0].genre
+        loadMovies(document.getElementById("GenreMovies"),response)
+      })
   </script>
   {% endblock content %}

@@ -13,6 +13,7 @@ class Movie(models.Model):
     genre = models.ManyToManyField('Genre',related_name='genres',blank=True,through='movie_genre')
     director = models.ForeignKey('Director',on_delete=models.CASCADE)
     cast = models.TextField(null=False)
+    description = models.TextField(null=False)
 
     def __str__(self) -> str:
         return self.name

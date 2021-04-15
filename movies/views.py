@@ -126,10 +126,12 @@ def get_popular(request):
 def get_genre_popular(request):
     hqs = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).order_by('-user_rating').first().movies
     hqs2 = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).values_list('movies',flat=True)
-    qs = Movie.objects.filter(genre=hqs.genre.all().order_by("?").first().id).order_by('rating')
+    qs = Movie.objects.filter(genre=hqs.genre.all().order_by("?").first().id).order_by('rating').order_by("?")
     data = []
     print(hqs2)
     for m in qs:
         if not m.id in hqs2:
             data.append(MovieSerializer(m).data)
+
+    print('data1qwer ',data)
     return Response(data,status=200)

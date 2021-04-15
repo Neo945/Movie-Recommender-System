@@ -17,7 +17,7 @@ class MovieSerializer(serializers.ModelSerializer):
     director = DirectorSerializer(read_only=True)
     class Meta:
         model = Movie
-        fields = ['id','name','poster','rating','director','cast','genre']
+        fields = ['id','name','poster','rating','director','cast','genre','description']
     
     def get_likes(self,obj):
         return obj.likes.count()
@@ -29,4 +29,4 @@ class MovieSerializer(serializers.ModelSerializer):
 class MovieCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
-        fields = ['name','poster','rating','cast']
+        fields = ['name','poster','rating','cast','description']
