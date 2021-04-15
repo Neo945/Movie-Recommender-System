@@ -39,7 +39,8 @@
                     <input class="form-control search" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-primary search" type="submit"><i class="fas fa-search"></i></button>
                 </form>
-                <button class="btn" id="logout">Logout</button>
+                <!-- <button class="btn" id="logout" href="{% url 'accounts:log' %}">Logout</button> -->
+                <a href="{% url 'accounts:log' %}"><button type="button" class="btn" id="logout">Logout</button></a>
             </div>
         </div>
     </nav>
