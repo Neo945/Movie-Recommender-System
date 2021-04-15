@@ -127,9 +127,9 @@ def generalize_list(l):
 
 def combine(l1,l2):
     l1 = sorted(l1,key=lambda x:x[0],reverse=True)
-    # print('l1 ',l1)
+    print('l1 ',l1)
     l2 = sorted(l2,key=lambda x:x[0],reverse=True)
-    # print('l2 ',l2)
+    print('l2 ',l2)
     l = len(l1) if len(l1)>len(l2) else len(l2)
     d1 = {}
     for k,v in l1:
@@ -146,14 +146,19 @@ def combine(l1,l2):
 
 def recommend_movies(list_watch,user):
     l = user_recomend(list_watch,user)
+    """User: -5 ... 5"""
+    """CB: 0...1"""
     # print('Final User list ',l)
     list_ = sorted(recommend_CB(list_watch),key=lambda x:x[1],reverse=True)
     list_ = list(filter(lambda x:math.floor(x[1]) != 1,list_))
-    list_ = list(map(lambda x:(x[0],x[1] * 2.5),list_))
+    print('list_ ',list_)
+    list_ = list(map(lambda x:(x[0],x[1] * 5),list_))
     print(list_)
     list_ = generalize_list(list_)
     # print('Final CB list ',list_)
     list_ = combine(l,list_)
+    print('list_ ',list_)
+
     print(list_)
     k = []
     count = 0

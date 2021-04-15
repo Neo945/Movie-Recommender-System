@@ -11,7 +11,6 @@ from rest_framework.response import Response
 
 # Create your views here.
 def login_view(request):
-    form = UserCreationForm(None)
     if request.user.is_authenticated and request.user:
         print(request.user)
         return redirect('/')
@@ -29,7 +28,7 @@ def login_view(request):
                 u = form.save(commit=True)
                 Profile(user=u).save()
                 return redirect('/')
-    return render(request,'pages/auth.html',{'form':form})
+    return render(request,'pages/auth.html',{})
 
 @permission_classes([IsAuthenticated])
 def logout_view(request):

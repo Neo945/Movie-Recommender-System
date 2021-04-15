@@ -8,7 +8,9 @@ from .views import (
     genre_movie,
     movie_search,
     create_movie,
-    recommend
+    recommend,
+    get_popular,
+    get_genre_popular
 )
 app_name = 'movies'
 
@@ -20,5 +22,7 @@ urlpatterns = [
     path('api/movie/create',create_movie),
     path('api/director',director_list),
     path('api/genre',genre_list),
-    path('recommend',recommend)
+    path('api/recommend',recommend),
+    path('api/popular',get_popular),
+    path('api/popular/genre/movie',get_genre_popular)
 ]
