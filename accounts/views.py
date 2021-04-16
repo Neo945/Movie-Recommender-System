@@ -56,5 +56,5 @@ def watched_movie(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def history(request):
-    qs = History.objects.filter(user=Profile.objects.filter(user=request.user).first())
+    qs = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).order_by("?")
     return Response(HistorySerializer(qs,many=True).data,status=200)

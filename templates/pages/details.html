@@ -12,17 +12,16 @@
     <div class="row g-0">
       <div class="col-md-4 mov-img">
         <img
-          src="https://in.bmscdn.com/discovery-catalog/events/tr:w-400,h-600,bg-CCCCCC:w-400.0,h-660.0,cm-pad_resize,bg-000000,fo-top:oi-discovery-catalog@@icons@@like_202006280402.png,ox-24,oy-617,ow-29/et00099813-yaeabeueqg-portrait.jpg"
+          src="https://www.popcorn.app/assets/app/images/placeholder-movieimage.png"
           alt="...">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h1 class="card-title">Movie Name: </h1>
-          <p><strong>Ratings: </strong></p>
-          <p class="card-text"><strong>Description: </strong>This is a wider card with supporting text below as a
-            natural lead-in to additional content. This content is a little bit longer.</p>
-          <p><strong>Cast: </strong></p>
-          <p><strong>Genre: </strong></p>
+          <p id='movie-genre'></p>
+          <h1 class="card-title" id="movie-name">Movie Name: </h1>
+          <p id="movie-rating"><i class="fa-size fab fa-imdb"></i>  </p>
+          <p class="card-text" id="movie-description"><strong>Description: </strong></p>
+          <p id="movie-cast"><strong>Cast: </strong></p>
           <p><strong>Movie release date: </strong></p>
           <a href="">Watch trailer&nbsp;&nbsp;<i class="fas fa-location-arrow"></i></a>
           <a href="">Watch movie&nbsp;&nbsp;<i class="fas fa-location-arrow"></i></a>
@@ -32,7 +31,7 @@
   </div>
   <br>
   <div class="container">
-    <form action="" method="POST">
+    <form method="POST" id="form_">
       <h1>Comment Section</h1>
       <br>
       <div class="mb-3">
@@ -53,8 +52,46 @@
         <label for="star1" title="text">1 star</label>
       </div><br><br><br><br>
 
-      <input type="button" id="submit" class="btn btn-primary" value="Submit">
+      <input type="submit" class="btn btn-primary" value="Submit">
     </form>
   </div>
+  <script>
+    const data = document.URL.split('/')
+    const id = data[data.length-1]
+    lookup(`http://127.0.0.1:8000/movie/api/movie/${id}`,null,'GET',(response,status)=>{
+      document.getElementById("movie-name").innerHTML = response.name
+      document.getElementById("movie-description").innerHTML += response.description
+      document.getElementById("movie-rating").innerHTML += response.rating
+      document.getElementById("movie-cast").innerHTML += response.cast
+      for (let c of response.genre){
+        if (response.genre.indexOf(c) == response.genre.length-1){
+          document.getElementById("movie-genre").innerHTML += c.genre
+        }else{
+          document.getElementById("movie-genre").innerHTML += c.genre + ', '
+        }
+      }
+    })
+    document.getElementById("form_").addEventListener("submit",(event)=>{
+      event.preventDefault()
+      console.log(document.querySelectorAll('input[name="rate"]'))
+      let rat = null
+      for (let c of document.querySelectorAll('input[name="rate"]')){
+        if (c.checked){
+          rat = c.value
+        }
+      }
+      lookup('http://127.0.0.1:8000/user/watch',{
+        movies:id,
+        user_rating:rat,
+        comments:document.getElementById("exampleFormControlTextarea1").value
+      },'POST',(response)=>{
+        console.log(response)
+        document.getElementById("exampleFormControlTextarea1").value = null
+        for (let c of document.querySelectorAll('input[name="rate"]')){
+          c.checked = false
+        }
+      })
+    })
+  </script>
 
 {% endblock content %}

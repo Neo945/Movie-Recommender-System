@@ -18,7 +18,7 @@
                                 alt="..." width="130" class="rounded mb-2 img-thumbnail" id="img">
                             <div class="media-body mb-5 text-white">
                                 <h4 class="mt-0 mb-0">{{user}}</h4>
-                                <p class="small mb-4"><i class="far fa-envelope mr-2"></i>&nbsp;{{ email }}</p>
+                                <p class="small mb-4"><i class="far fa-envelope mr-2"></i>&nbsp;{{ user.email }}</p>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@
                         <ul class="list-inline mb-0 col-md-12">
                             <li class="list-inline-item">
                                 <h5 class="font-weight-bold mb-0 d-block">Movies watched</h5>
-                                <small class="text-muted">{{ no_of_movies }}
+                                <small class="text-muted" id="count">
                             </li>
                         </ul>
                     </div>
@@ -42,10 +42,18 @@
         </div>
     </div>
     <script>
-        let str = `<div class="col-lg-6 mb-2 pr-lg-1 movie-box"><img
+        let str = (c) => `<div class="col-lg-6 mb-2 pr-lg-1 movie-box"><img
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA7ivEX6cqgLU7UJDkmu_SH8N99XLfG4MuxA&usqp=CAU"
-                                    alt="" class="img-fluid rounded shadow-sm"><br><div class="movie-name">Movie name</div></div>`
-                                    str = str + str + str + str
-        document.getElementById("movies").innerHTML = str
+                                    alt="" class="img-fluid rounded shadow-sm"><br><div class="movie-name">${c.movies}</div></div>`
+
+        const loadMovies = (loc,response) =>{
+            for (let c of response){
+              loc.innerHTML += str(c)
+            }
+        }
+        lookup('user/watched',null,'GET',(response,status)=>{
+            document.getElementById("count").innerHTML = response.length
+            loadMovies(document.getElementById("movies"),response.slice(0,3))
+        })
     </script>
 {% endblock content %}
