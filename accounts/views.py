@@ -42,6 +42,8 @@ def logout_view(request):
 @permission_classes([IsAuthenticated])
 def watched_movie(request):
     serial = HistoryCreateSerializer(data=request.data or None)
+    if History.objects.filter(user=Profile.objects.filter(user=request.user).first()).filter(movies=request.data['movies']).exists():
+        serial = HistoryCreateSerializer(instance=History.objects.filter(user=Profile.objects.filter(user=request.user).first()).filter(movies=request.data['movies']).first(),data=request.data)
     if serial.is_valid():
         serial.save(user=Profile.objects.filter(user=request.user).first())
         return Response({'message':f'Enjoy your movie'},status=201)
