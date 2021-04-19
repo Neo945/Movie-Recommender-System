@@ -34,3 +34,7 @@ body{
 .dropdown-toggle{
     background-color: #e3f2fd;
 }
+
+h1,h3{
+    font-family: 'Raleway', sans-serif;
+}

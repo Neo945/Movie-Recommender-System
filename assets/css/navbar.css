@@ -11,10 +11,24 @@
     background-color: transparent !important;
 }
 
-.nav-link, .navbar-brand{
-    color: white !important;
-}
+    .nav-link{
+        color: #fff !important;
+        font-size: 21px !important;
+        padding: 0 0 5px 0 !important;
+        display: unset;
+        font-weight:500;
+        letter-spacing: .5px;
+        text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+        transition: .3s linear;
+    }
 
+    .nav-link:hover{
+        border-bottom: 2px solid #fff;
+    }
+
+#home{
+    margin-left: 50px;
+}
 
 .search{
     opacity: 0.5 !important;
@@ -27,10 +41,16 @@
 
 
 body {
-    background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg') !important;
+    /* background: url('https://cdn.hipwallpaper.com/i/74/1/0DwRxo.jpg') !important;
     backdrop-filter: blur(10px);
     background-size: cover !important;
-    height: 100%;
+    height: 100%; */
+
+    height: 100vh;
+    background-image:linear-gradient(45deg, rgba(125,173,163,.1) 0%, rgba(229,227,223,.3) 46%, rgba(255,186,178,1) 100%),url('https://i.pinimg.com/originals/04/f4/d0/04f4d0c9cc79fbb7c98dc5fcb91d4370.jpg')!important;
+    background-size: cover !important;
+    background-repeat: no-repeat;
+    overflow-x:hidden;
 }
 
 .search{
@@ -49,6 +69,10 @@ body {
 }
 
 #navbar-brand{
-    font-size: 35px;
-    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2rem;
+    color: black;
+}
+
+.navbar-brand{
+    font-family: 'Dela Gothic One', cursive;
 }

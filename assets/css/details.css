@@ -6,9 +6,13 @@
     margin-left: 15px;
 }
 .fa-size{
-    font-size: 30px;
-
+    font-size: 35px;
 }
+
+.card-body a{
+    text-decoration: none;
+}
+
 .mb-31{
     height: 30em;
     margin: auto;
