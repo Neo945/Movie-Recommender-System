@@ -1,3 +1,4 @@
+{% load static %}
 <body>
     <!DOCTYPE html>
     <html lang="en">
@@ -6,7 +7,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title></title>
-        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -38,7 +39,7 @@
                         <h1>BINGE IT OUT!</h1>
                         <!-- <h1><br>For the <span id="hero">Spider-Man</span></h1> -->
                         <p>Enjoy your popcorn and enjoy the show. It's just a movie, so have fun!</p>
-                        <a href="#" class="express-btn">Sign-up/Sign-in&nbsp;<i class="fas fa-location-arrow"></i></a>
+                        <a href="{% url 'frontend:login' %}" class="express-btn">Sign-up/Sign-in&nbsp;<i class="fas fa-location-arrow"></i></a>
                     </div>
                     <div class="col-md-6">
                         <img src="http://www.pngall.com/wp-content/uploads/2016/05/Spider-Man-PNG-Picture.png"

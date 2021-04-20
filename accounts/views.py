@@ -13,22 +13,22 @@ from rest_framework.response import Response
 def login_view(request):
     if request.user.is_authenticated and request.user:
         print(request.user)
-        return redirect('/')
+        return redirect('/dashboard')
     if request.method=='POST':
         if request.POST.get('login')=='1':
             form = AuthenticationForm(request,data=request.POST or None)
             if form.is_valid():
                 user_ = form.get_user()
                 login(request,user_)
-                return redirect('/')
+                return redirect('/dashboard')
         else:
             form = UserCreationForm(request.POST or None)
             if form.is_valid():
                 print('qwerty')
                 u = form.save(commit=True)
                 Profile(user=u).save()
-                return redirect('/')
-    return render(request,'pages/auth.html',{})
+                return redirect('/login')
+    return redirect('/login')
 
 @permission_classes([IsAuthenticated])
 def logout_view(request):

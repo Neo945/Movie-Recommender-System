@@ -26,7 +26,7 @@
                         <ul class="list-inline mb-0 col-md-12">
                             <li class="list-inline-item">
                                 <h5 class="font-weight-bold mb-0 d-block">Movies watched</h5>
-                                <small class="text-muted" id="count">
+                                <small class="text-muted" id="count">{{ data.count }}
                             </li>
                         </ul>
                     </div>
@@ -52,7 +52,6 @@
             }
         }
         lookup('user/watched',null,'GET',(response,status)=>{
-            document.getElementById("count").innerHTML = response.length
             loadMovies(document.getElementById("movies"),response.slice(0,3))
         })
     </script>

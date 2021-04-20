@@ -124,9 +124,13 @@ def get_popular(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_genre_popular(request):
-    hqs = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).order_by('-user_rating').first().movies
+    hqs = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).order_by('-user_rating')
     hqs2 = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).values_list('movies',flat=True)
-    qs = Movie.objects.filter(genre=hqs.genre.all().order_by("?").first().id).order_by('rating').order_by("?")
+    print(hqs)
+    if hqs.count()==0:
+        qs = Movie.objects.filter(genre=Genre.objects.all().order_by("?").first().id).order_by('rating').order_by("?")
+        return Response(MovieSerializer(qs,many=True).data,status=200)
+    qs = Movie.objects.filter(genre=hqs.first().movies.genre.all().order_by("?").first().id).order_by('rating').order_by("?")
     data = []
     print(hqs2)
     for m in qs:

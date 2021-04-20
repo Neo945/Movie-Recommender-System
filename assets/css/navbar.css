@@ -69,10 +69,10 @@ body {
 }
 
 #navbar-brand{
-    font-size: 2rem;
-    color: black;
+    font-size: 2rem !important;
+    color: black !important;
 }
 
 .navbar-brand{
-    font-family: 'Dela Gothic One', cursive;
+    font-family: 'Dela Gothic One', cursive !important;
 }
