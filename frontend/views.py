@@ -21,6 +21,6 @@ def movie_details_page(request,movie_id):
     return render(request,'pages/404.html',{'data':'movie not found'},status=404)
 
 def profile_page(request):
-    count = History.objects.filter(user=Profile.objects.filter(user= request.user)).count()
-    print(Profile.objects.filter(user= request.user).first().email)
+    count = History.objects.filter(user=Profile.objects.filter(user= request.user).first()).count()
+    print(request.user.email)
     return render(request,'pages/profile.html',{'data':{'count':count},},status=200)
