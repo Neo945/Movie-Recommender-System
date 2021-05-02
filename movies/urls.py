@@ -1,6 +1,7 @@
 from django.urls import path
 from django.views.generic.base import TemplateView
 from .views import (
+    add_data,
     all_movies,
     director_list,
     genre_list,
@@ -24,5 +25,6 @@ urlpatterns = [
     path('api/genre',genre_list),
     path('api/recommend',recommend),
     path('api/popular',get_popular),
-    path('api/popular/genre/movie',get_genre_popular)
+    path('api/popular/genre/movie',get_genre_popular),
+    path('add/',add_data)
 ]

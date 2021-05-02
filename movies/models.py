@@ -1,9 +1,6 @@
 from django.db import models
-from accounts.models import Profile
-from django.conf import settings
 from django.core.validators import MaxValueValidator,MinValueValidator
 
-User = settings.AUTH_USER_MODEL
 
 # Create your models here.
 class Movie(models.Model):

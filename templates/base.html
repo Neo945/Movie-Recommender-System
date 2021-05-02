@@ -26,7 +26,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background-color: #e3f2fd;">
         <div class="container-fluid">
-            <a class="navbar-brand" id="navbar-brand" href="#">NETFLIX</a>
+            <a class="navbar-brand" id="navbar-brand" href="#">MovieBox</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -37,20 +37,16 @@
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" id="home" href="{% url 'frontend:dashboard' %}">Home</a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link" aria-current="page" id="home" href="{% url 'frontend:profile' %}">Profile</a>
+                        <a class="nav-link" aria-current="page" id="prof" style="margin-left: 40px;" href="{% url 'frontend:profile' %}">Profile</a>
                     </li>
                 </ul>
                 <form class="d-flex" id="form">
 
                     <label for="movie-search"></label>
-                    <input id="movie_search" class="form-control search" type="search" placeholder="Search" aria-label="Search" list="movies" name="movie-search">
-                    <datalist id="movies_q">
-                      <option value="Edge">
-                      <option value="Firefox">
-                      <option value="Chrome">
-                      <option value="Opera">
-                      <option value="Safari">
+                    <input list="movies_qq" autocomplete="off" id="movie_search" class="form-control search movie_search" type="search" placeholder="Search" aria-label="Search" list="movies" name="movie-search">
+                    <datalist id="movies_qq">
                     </datalist>
 
                     <!-- <input class="form-control search" type="search" placeholder="Search" aria-label="Search"> -->
@@ -67,20 +63,29 @@
 <script>
     document.getElementById('movie_search').addEventListener('keyup',(e)=>{
         lookup(`http://127.0.0.1:8000/movie/api/movie/search?str=${e.target.value}`,null,'GET',(response,status)=>{
-            const list = document.getElementById("movies_q")
+            const list = document.getElementById("movies_qq")
             list.innerHTML = ""
             let count = 0
             if (status===200){
                 for (let data in response){
-                    list.innerHTML += `<option value="${response[data].name}"/>`
+                    list.innerHTML += `<option data-value="${response[data].id}" value="${response[data].name}"></option>`
                     count++
                     if (count>4){
                         break
                     }
                 }
-                console.log(list)
             }
         })
+
+    })
+    document.getElementById("form").addEventListener("submit", event =>{
+        event.preventDefault()
+        var form = new FormData(event.target)
+        // console.log(form.get('movie-search'))
+        // var value = document.querySelector("#movie_search option[value='" + form.get('movie-search') + "']");
+        var value = document.querySelector("#movies_qq option[value='" + form.get('movie-search') + "']").dataset.value;
+        console.log(value)
+        window.location.href = `http://127.0.0.1:8000/movie/${value}`;
     })
 </script>
 </body>

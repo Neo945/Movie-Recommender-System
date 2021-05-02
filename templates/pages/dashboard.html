@@ -71,7 +71,12 @@
         loadMovies(document.getElementById("popMovies"),response)
       })
       lookup('movie/api/popular/genre/movie',null,'GET',(response,status)=>{
-        document.getElementById("genre").innerHTML = response[0].genre[0].genre
+        if(response[0]){
+          document.getElementById("genre").innerHTML = response[0].genre[0].genre
+        }else{
+          document.getElementById("genre").innerHTML = 'none'
+
+        }
         loadMovies(document.getElementById("GenreMovies"),response)
       })
   </script>

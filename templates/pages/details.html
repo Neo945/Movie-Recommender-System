@@ -19,7 +19,7 @@
         <div class="card-body">
           <p id='movie-genre'></p>
           <h1 class="card-title" id="movie-name">Movie Name: </h1>
-          <p id="movie-rating"><i class="fa-size fab fa-imdb"></i></p>
+          <p id="movie-rating"><i class="fa-size fab fa-imdb"></i><span id="rat"></span></p>
           <p class="card-text" id="movie-description"><strong>Description: </strong></p>
           <p id="movie-cast"><strong>Cast: </strong></p>
           <p><strong>Movie release date: </strong></p>
@@ -61,7 +61,7 @@
     lookup(`http://127.0.0.1:8000/movie/api/movie/${id}`,null,'GET',(response,status)=>{
       document.getElementById("movie-name").innerHTML = response.name
       document.getElementById("movie-description").innerHTML += response.description
-      document.getElementById("movie-rating").innerHTML += response.rating
+      document.getElementById("rat").innerHTML = response.rating
       document.getElementById("movie-cast").innerHTML += response.cast
       for (let c of response.genre){
         if (response.genre.indexOf(c) == response.genre.length-1){

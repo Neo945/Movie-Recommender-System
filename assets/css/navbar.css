@@ -47,9 +47,11 @@ body {
     height: 100%; */
 
     height: 100vh;
-    background-image:linear-gradient(45deg, rgba(125,173,163,.1) 0%, rgba(229,227,223,.3) 46%, rgba(255,186,178,1) 100%),url('https://i.pinimg.com/originals/04/f4/d0/04f4d0c9cc79fbb7c98dc5fcb91d4370.jpg')!important;
+    background-image:linear-gradient(45deg, rgba(125,173,163,.1) 0%, rgba(229,227,223,.3) 46%, rgba(255,186,178,1) 100%),url('https://i.pinimg.com/originals/04/f4/d0/04f4d0c9cc79fbb7c98dc5fcb91d4370.jpg') !important;
     background-size: cover !important;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+
     overflow-x:hidden;
 }
 

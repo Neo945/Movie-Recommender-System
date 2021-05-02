@@ -6,9 +6,12 @@
     margin-left: 15px;
 }
 .fa-size{
-    font-size: 35px;
+    font-size: 25px;
+    margin-right: 5px;
 }
-
+#rat{
+    transform: translateY(-2.5px);
+}
 .card-body a{
     text-decoration: none;
 }
