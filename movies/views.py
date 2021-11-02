@@ -1,9 +1,10 @@
+import sqlite3
 from os import name
 from django.db import models
-from accounts.models import Profile,History
+from accounts.models import Profile, History
 from django.http.response import Http404, JsonResponse
 from movies.serializers import DirectorSerializer, GenreSerializer, MovieCreateSerializer, MovieSerializer
-from movies.models import Director, Movie,Genre
+from movies.models import Director, Movie, Genre
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -12,39 +13,46 @@ from accounts.serializers import HistorySerializer
 from .recommend import recommend_movies
 
 # Create your views here.
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def all_movies(request):
     qs = Movie.objects.all()
-    serial = MovieSerializer(qs,many=True)
-    return Response(serial.data,status=200)
+    serial = MovieSerializer(qs, many=True)
+    return Response(serial.data, status=200)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def movie_details(request,movie_id):
+def movie_details(request, movie_id):
     qs = Movie.objects.filter(pk=movie_id).first()
-    return Response(MovieSerializer(qs).data,status=200)
+    return Response(MovieSerializer(qs).data, status=200)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def genre_movie(request,genre_id):
+def genre_movie(request, genre_id):
     if Genre.objects.filter(pk=genre_id).exists():
         if Movie.objects.filter(genre=Genre.objects.filter(pk=genre_id).first()).exists():
-            qs = Movie.objects.filter(genre=Genre.objects.filter(pk=genre_id).first()).first()
-            return Response(MovieSerializer(qs).data,status=200)
-        return Response({'message':'Movie Not Found'},status=404)
-    return Response({'message':'Not a valid Genre'},status=404)
+            qs = Movie.objects.filter(
+                genre=Genre.objects.filter(pk=genre_id).first()).first()
+            return Response(MovieSerializer(qs).data, status=200)
+        return Response({'message': 'Movie Not Found'}, status=404)
+    return Response({'message': 'Not a valid Genre'}, status=404)
+
 
 @api_view(['GET'])
 def movie_search(request):
     try:
         str = request.GET['str']
     except:
-        return Response({'message':'not valid'},status=400)
+        return Response({'message': 'not valid'}, status=400)
     qs = Movie.objects.filter(name__contains=str)
     if qs.exists():
-        return Response(MovieSerializer(qs[:5],many=True).data,status=200)
-    return Response({'message':'Movie not found'},status=404)
+        return Response(MovieSerializer(qs[:5], many=True).data, status=200)
+    return Response({'message': 'Movie not found'}, status=404)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -55,13 +63,14 @@ def create_movie(request):
     serial = MovieCreateSerializer(data=request.data or None)
     if serial.is_valid():
         dir = Director.objects.get_or_create(name=dir)
-        u = serial.save(director=dir,upload_by=Profile.objects.filter(user=request.user).first())        
+        u = serial.save(director=dir, upload_by=Profile.objects.filter(
+            user=request.user).first())
         m = Movie.objects.filter(name=serial.data['name']).first()
         for g in genre:
             qs = Genre.objects.get_or_create(genre=g)
             m.genre.add(qs)
-        return Response({'message':'Success'},status=201)
-    return Response({},status=400)
+        return Response({'message': 'Success'}, status=201)
+    return Response({}, status=400)
 
     '''
     {
@@ -75,86 +84,85 @@ def create_movie(request):
     }
 '''
 
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def genre_list(request):
     qs = Genre.objects.all()
-    serial = GenreSerializer(qs,many=True)
-    return Response(serial.data,status=200)
+    serial = GenreSerializer(qs, many=True)
+    return Response(serial.data, status=200)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def director_list(request):
     qs = Director.objects.all()
-    serial = DirectorSerializer(qs,many=True)
-    return Response(serial.data,status=200)
+    serial = DirectorSerializer(qs, many=True)
+    return Response(serial.data, status=200)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def recommend(request):
     user = request.user
     qs = History.objects.filter(user=Profile.objects.filter(user=user).first())
-    if not qs.exists():
-        return Response(MovieSerializer(Movie.objects.all().order_by("?")[:5],many=True).data,status=200)
-    print('data3')
     watched_movies = list()
     for q in qs:
         watched_movies.append(q.movies)
-    qs = recommend_movies(watched_movies,Profile.objects.filter(user=request.user).first())
-    print('data5')
-    data = []
-    for l in qs:
-        if not l in watched_movies:
-            s = MovieSerializer(l)
-            data.append(s.data)
-    print(data)
-    return Response(data[:5],status=200)
+    qs = recommend_movies(
+        qs, Profile.objects.filter(user=request.user).first())
+    data = MovieSerializer(qs, many=True).data
+    return Response(data, status=200)
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_popular(request):
-    hqs = History.objects.filter(user=Profile.objects.filter(user=request.user).first())[:5].values_list('movies',flat=True)
+    hqs = History.objects.filter(user=Profile.objects.filter(
+        user=request.user).first())[:5].values_list('movies', flat=True)
     top_rated_movies = Movie.objects.all().order_by("-rating")
     data = []
     for m in top_rated_movies:
         if not m.id in hqs:
             data.append(MovieSerializer(m).data)
-    return Response(data[:5],status=200)
+    return Response(data[:5], status=200)
 
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_genre_popular(request):
-    hqs = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).order_by('-user_rating')
-    hqs2 = History.objects.filter(user=Profile.objects.filter(user=request.user).first()).values_list('movies',flat=True)
-    print(hqs)
-    if hqs.count() == 0:
-        qs = Movie.objects.filter(genre=Genre.objects.all().order_by("?").first()).order_by('rating').order_by("?")
-        return Response(MovieSerializer(qs[:5],many=True).data,status=200)
-    qs = Movie.objects.filter(genre=hqs.first().movies.genre.all().order_by("?").first().id).order_by('rating').order_by("?")
-    data = []
-    print(hqs2)
-    for m in qs:
-        if not m.id in hqs2:
-            data.append(MovieSerializer(m).data)
-
-    print('data1qwer ',data)
-    return Response(data[:5],status=200)
-
-import sqlite3
+    hqs = History.objects.filter(user=Profile.objects.filter(
+        user=request.user).first()).order_by('-user_rating')
+    hqs2 = History.objects.filter(user=Profile.objects.filter(
+        user=request.user).first()).values_list('movies', flat=True)
+    # print(hqs)
+    # if hqs.count() == 0:
+    qs = Movie.objects.filter(genre=Genre.objects.all().order_by(
+        "?").first()).order_by('rating').order_by("?")
+    return Response(MovieSerializer(qs[:5], many=True).data, status=200)
+    # qs = Movie.objects.filter(genre=hqs.first().movies.genre.all().order_by(
+    # "?").first().id).order_by('rating').order_by("?")
+    # data = []
+    # print(hqs2)
+    # for m in qs:
+    # if not m.id in hqs2:
+    # data.append(MovieSerializer(m).data)
+#
+    # print('data1qwer ', data)
+    # return Response(data[:5], status=200)
 
 
 def add_data(request):
     conn = sqlite3.connect('movies.db')
     cursor = conn.execute("SELECT * from mytable")
     for row in cursor:
-        m = Movie(name=row[7],rating=row[19])
-        if row[21]!=None:
-            m.cast =row[21]
+        m = Movie(name=row[7], rating=row[19])
+        if row[21] != None:
+            m.cast = row[21]
         else:
             m.cast = 'None'
         id = None
-        if row[23]!=None:
+        if row[23] != None:
             if Director.objects.filter(name=row[23]).exists():
                 id = Director.objects.filter(name=row[23]).first().id
             else:
