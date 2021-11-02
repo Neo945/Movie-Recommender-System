@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'movies',
     'accounts',
     'frontend',
@@ -124,10 +124,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'assets',
 ]
 REST_FRAMEWORK = {
-    'DEFAULT_RENDER_CLASSES' : ['rest_framework.renderers.BrowsableAPIRenderer'],
-    'DEFAULT_AUTHENTICATION_CLASSES' : ['rest_framework.authentication.SessionAuthentication']
+    'DEFAULT_RENDER_CLASSES': ['rest_framework.renderers.BrowsableAPIRenderer'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework.authentication.SessionAuthentication']
 }
